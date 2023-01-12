@@ -39,12 +39,7 @@ class BlurActivity : AppCompatActivity() {
         binding = ActivityBlurBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Observe work status, added in onCreate()
-        viewModel.outputWorkInfos.observe(this, workInfosObserver())
-
         binding.goButton.setOnClickListener { viewModel.applyBlur(blurLevel) }
-        // Hookup the Cancel button
-        binding.cancelButton.setOnClickListener { viewModel.cancelWork() }
 
         // Setup view output image file button
         binding.seeFileButton.setOnClickListener {
@@ -55,6 +50,12 @@ class BlurActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // Hookup the Cancel button
+        binding.cancelButton.setOnClickListener { viewModel.cancelWork() }
+
+        // Observe work status
+        viewModel.outputWorkInfos.observe(this, workInfosObserver())
     }
 
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
